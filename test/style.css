@@ -1,0 +1,38 @@
+.fade-in-enter-from,
+.fade-in-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.fade-in-enter-active,
+.fade-in-leave-active {
+  transition: all 0.3s ease;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  margin-top: 10px;
+  border-radius: 2px;
+  background-color: #409eff;
+}
+
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 1;
+  color: #fff;
+  background-color: #409eff;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn + .btn {
+  margin-left: 10px;
+}
