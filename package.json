@@ -1,9 +1,9 @@
 {
-  "name": "show.js",
-  "version": "0.0.0",
-  "description": "",
+  "name": "@eas0nchan/show.js",
+  "version": "0.0.0-alpha.2",
+  "description": "Create element entering or leaving animation base on css transition.",
   "author": "Eason Chan",
-  "keywords": [],
+  "keywords": ["css", "transition"],
   "license": "MIT",
   "repository": {
     "type": "git",

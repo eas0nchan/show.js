@@ -1,8 +1,22 @@
 import { expect, it } from 'vitest'
 import { classNameFormatter } from '../show'
 
-it('classNameFormatter', () => {
-  const result = classNameFormatter('fade-in', '[name]__[stage]')
+it('classNameFormatter1', () => {
+  const result = classNameFormatter('fade-in')
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "enterActiveClass": "fade-in-enter-active",
+      "enterFromClass": "fade-in-enter-from",
+      "enterToClass": "fade-in-enter-to",
+      "leaveActiveClass": "fade-in-leave-active",
+      "leaveFromClass": "fade-in-leave-from",
+      "leaveToClass": "fade-in-leave-to",
+    }
+  `)
+})
+
+it('classNameFormatter2', () => {
+  const result = classNameFormatter('fade-in__[stage]')
   expect(result).toMatchInlineSnapshot(`
     {
       "enterActiveClass": "fade-in__enter-active",

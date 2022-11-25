@@ -15,17 +15,7 @@ export function callHook(hooks, name) {
   if (typeof hooks?.[name] === 'function') hooks[name]()
 }
 
-export function createTransition(options) {
-  let name = null
-  let className = null
-  if (typeof options === 'string') {
-    name = options
-    className = '[name]-[stage]'
-  } else {
-    name = options.name
-    className = options.className ?? '[name]-[stage]'
-  }
-
+export function createTransition(name) {
   const {
     enterFromClass,
     enterActiveClass,
@@ -33,22 +23,9 @@ export function createTransition(options) {
     leaveFromClass,
     leaveActiveClass,
     leaveToClass
-  } = classNameFormatter(name, className)
-
-  function clearClass(el) {
-    removeClass(
-      el,
-      enterFromClass,
-      enterActiveClass,
-      enterToClass,
-      leaveFromClass,
-      leaveActiveClass,
-      leaveToClass
-    )
-  }
+  } = classNameFormatter(name)
 
   function enter(el, hooks) {
-    clearClass(el)
     function handleAfterEnter() {
       removeClass(el, enterActiveClass, enterToClass)
       el.removeEventListener('transitionend', handleAfterEnter)
@@ -65,7 +42,6 @@ export function createTransition(options) {
   }
 
   function leave(el, hooks) {
-    clearClass(el)
     function handleAfterLeave() {
       removeClass(el, leaveActiveClass, leaveToClass)
       el.removeEventListener('transitionend', handleAfterLeave)
@@ -84,21 +60,23 @@ export function createTransition(options) {
   return { enter, leave }
 }
 
-export function classNameFormatter(name, className = '[name]-[stage]') {
-  const stageClassNames = {}
-  if (typeof className === 'string') {
+export function classNameFormatter(name) {
+  const classNames = {}
+
+  if (typeof name === 'string') {
+    if (!/\[stage\]/.test(name)) name = `${name}-[stage]`
     stages.forEach(stage => {
-      const replaceVals = { name, stage }
       const key = getStageKey(stage)
-      stageClassNames[key] = className.replace(/\[(name|stage)\]/g, (match, p) => replaceVals[p])
+      classNames[key] = name.replace(/\[stage\]/g, () => stage)
     })
   } else {
     stages.forEach(stage => {
       const key = getStageKey(stage)
-      stageClassNames[key] = className[key]
+      classNames[key] = name[key]
     })
   }
-  return stageClassNames
+
+  return classNames
 }
 
 function nextFrame(cb) {
